@@ -4,6 +4,7 @@
 *$py.class
 */.ipynb_checkpoints/
 .idea/
+*/func/
 
 # C extensions
 *.so
