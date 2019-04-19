@@ -1,12 +1,15 @@
-function lpyramid(Ps, Ds, img, p)
+function lpy = lpyramid(subsamples, blurs, p)
+    size(subsamples)
+    size(blurs)
     f = figure;
-    
-    for i = 2:length(Ds)
-        Li = Ds{i-1}-Ds{i};
-        a = subplot(2, 4, i-1);
-        imshow(Li);
+    lpy = {};
+    for i = 1:length(blurs)
+        
+        %for j = 1:length(blurs{i})
+        sz = size(blurs{i});
+        a = subplot(2, 4, i);
+        gray = mat2gray(blurs{i} - subsamples{i});
+        lpy{end+1} = gray;
+        imshow(gray);
     end
-    suptitle(p);
-    filename = strcat('results/part2_', p);
-    saveas(f, filename);
 end      
