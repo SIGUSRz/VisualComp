@@ -13,10 +13,9 @@ function [subsample, blur] = gpyramid(I, p)
     subsample{end + 1} = img;
     
     for i = 1:N
-        img = cat(2,img,img(:, sz(1)));
-        img = cat(1,img,img(sz(1), :));
+        img = padarray(img, [1, 1], 'replicate');
         img = imfilter(img, h, 'conv');
-        v = [1:sz(1)];        
+        v = [2:sz(1)+1];
         img = img(v, v);
         
         blur{end + 1} = img;
@@ -40,4 +39,6 @@ function [subsample, blur] = gpyramid(I, p)
         end
     end
     suptitle(p);
+    filename = strcat('results/part1_', p);
+    saveas(f, filename);
 end

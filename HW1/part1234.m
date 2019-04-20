@@ -20,13 +20,14 @@ function original = part0(img_path)
         edge_detection(subsamples, thresh{i}, filenames{i});
     end
     
-    pairs = {[1, 2], [3, 4], [1, 5]};
+    pairs = {[1, 3], [3, 5], [5, 1]};
     length(pairs)
     for i = 1:length(pairs)
         pyramids = pairs{i}
         lpy1 = lpyramids{pyramids(1)};
         lpy2 = lpyramids{pyramids(2)};
-        mulres_spine(lpy1, lpy2);
+        file = strcat(int2str(pyramids(1)), '_', int2str(pyramids(2)), '.jpg') 
+        mulres_spine(lpy1, lpy2, file);
     end
 %     
 end
