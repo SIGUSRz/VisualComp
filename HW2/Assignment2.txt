@@ -91,6 +91,50 @@ path = 'han.jpg';
 img = imread(path);
 imshow(img)
 
+% dft of original 64 x 64
+dft = fft2(img);
+imshow(real(dft))
+
+
+colPadding = zeros(64, 64);
+rowPadding = zeros(64, 128);
+
+img = [img, colPadding];
+img = [img; rowPadding];
+
+% dft of original 128 x 128
+dft2 = fft2(img);
+imshow(real(dft2))
+
+colPadding = zeros(128, 128);
+rowPadding = zeros(128, 256);
+
+img = [img, colPadding];
+img = [img; rowPadding];
+
+% dft of original 256 x 256
+dft3 = fft2(img);
+imshow(real(dft3))
+
+colPadding = zeros(256, 256);
+rowPadding = zeros(256, 512);
+
+img = [img, colPadding];
+img = [img; rowPadding];
+
+% dft of original 512 x 512
+dft4 = fft2(img);
+imshow(real(dft4))
+
+
+
+
+
+
+
+
+
+
 
 
 
