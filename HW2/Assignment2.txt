@@ -1,0 +1,107 @@
+
+
+##### Part 1
+
+### Part A
+
+## Step 1
+img = zeros(512,512);
+
+## Step 2
+
+% x is row, y is col
+for row=1:size(img,1)
+    for col=1:size(img,2)
+        img(row, col) = sin(0.2*row) + sin(0.3*row) + cos(0.4*row) + sin(0.15*(row^2 + col^2)^0.5) + sin(0.15*(row^2 + col^2)^0.5);
+    end
+end
+
+imshow(img)
+
+## Step 3
+
+dft = fft2(img);
+imagesc(abs(fftshift(dft)))
+
+m = abs(dft);                               % Magnitude
+imagesc(abs(fftshift(m)))
+
+dft(m<1e-6) = 0;
+p = unwrap(angle(dft));                     % Phase
+imagesc(abs(fftshift(p)))
+
+## Step 4
+
+dft = fft2(img);
+imagesc(abs(fftshift(dft)))
+
+idft = ifft2((2*abs(dft)));
+% imagesc(idft)
+imshow(idft)
+
+It's a zoomed out version of the first one. Now it has the same pattern but twice
+
+### Part B
+
+https://stackoverflow.com/questions/14507598/matlab-how-to-fix-warning-displaying-real-part-of-complex-input
+
+path = 'Cross.jpg';
+img = imread(path);
+imshow(img)
+
+dft = fft2(img);
+imshow(real(dft))
+
+##### Part 2
+
+
+https://www.youtube.com/watch?v=0lTSERUFuQQ
+https://dsp.stackexchange.com/questions/35410/delete-frequency-components-with-fft-and-ifft
+https://www.youtube.com/watch?v=32FOKhY4mW8
+
+https://www.youtube.com/watch?v=seEjFQ0lNhY&list=RDMMJrWxCUFMruo&index=16
+
+path = 'psnr2.png';
+img = imread(path);
+imshow(img)
+
+dft = fftshift(fft2(img));
+% imshow(real(dft))
+[x, y] = meshgrid(-128:127, -128:127);
+radius=(x.^2 + y.^2)^0.5;
+circle = radius < 10;
+
+dft = dft.*circle;
+
+idft = ifft2(dft);
+
+final = log(1+abs(idft));
+final_m = max(final(:));
+% final_combo = im2uint8(final/final_m);
+
+% to_show = dft - final_combo
+
+imshow(im2uint8(final/final_m));
+
+
+
+##### Part 3
+
+path = 'han.jpg';
+img = imread(path);
+imshow(img)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
