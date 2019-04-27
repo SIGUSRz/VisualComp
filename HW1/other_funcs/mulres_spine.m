@@ -1,4 +1,4 @@
-function mulres_spine(lpy1, lpy2, p)
+function mulres_spine(lpy1, lpy2)
     mask = cat(2, ones([256, 127]), zeros(256, 129));
     size(mask)
     [subsamples, blurs] = gpyramid(mask, 'filter gpyramid');
@@ -8,19 +8,19 @@ function mulres_spine(lpy1, lpy2, p)
     length(subsamples)
     
     for level=1:length(lpy1)
+        size(subsamples{level+1})
+        size(lpy1{level})
         GR = subsamples{level};
         LS = GR.*lpy1{level} + (1 - GR).*lpy2{level};
-        a = subplot(3, 3, level); 
+        a = subplot(4, 2, level); 
         imshow(LS);
         
         
         sumLS = sumLS + imresize(LS, [256, 256], 'bilinear');
     end
     
-    f = figure;
-    imshow(sumLS)
-    filename = strcat('results/part4_', p);
-    saveas(f, filename);
+    figure;
+    imshow(sumLS/length(lpy1))
     
         
 
