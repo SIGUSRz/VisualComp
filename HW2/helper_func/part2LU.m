@@ -8,7 +8,8 @@ shiftedM=abs(shiftedF);
 minM = min(shiftedM(:))
 maxM = max(shiftedM(:))
 
-[L, U] = ratio;
+L = ratio(1);
+U = ratio(2);
 
 threshL= maxM * L + minM * (1.0-L)
 threshU= maxM * U + minM * (1.0-U)
@@ -31,7 +32,7 @@ end
 
 subtract=real(ifft2(fftshift(shiftedF)));
 
-subtract = medfilt2(subtract);
+% subtract = medfilt2(subtract);
 
 
 if print

@@ -1,4 +1,4 @@
-function subtract = part2LU(img, ratio, limC, nxn, print)
+function subtract = part2_blacknoise(img, ratio, limC, nxn, print)
 [w, h] = size(img);
 I = img;
 I=I-mean(I(:)); % Should I take zero-mean?
@@ -8,7 +8,8 @@ shiftedM=abs(shiftedF);
 minM = min(shiftedM(:))
 maxM = max(shiftedM(:))
 
-[L, U] = ratio;
+L = ratio(1);
+U = ratio(2);
 
 threshL= maxM * L + minM * (1.0-L)
 threshU= maxM * U + minM * (1.0-U)
@@ -17,7 +18,7 @@ param = 9;
 
 max3x3 = ordfilt2(shiftedM, 9, ones(nxn, nxn));
 
-where = (shiftedM == max3x3) & (shiftedM > threshL)  & (shiftedM < threshU);;
+where = (shiftedM == max3x3) & ((shiftedM > threshL)  | (shiftedM < threshU));
 
 [r, c] = find(where);
 % whos r
@@ -31,7 +32,7 @@ end
 
 subtract=real(ifft2(fftshift(shiftedF)));
 
-subtract = medfilt2(subtract);
+% subtract = medfilt2(subtract);
 
 
 if print
