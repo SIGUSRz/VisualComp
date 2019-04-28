@@ -1,59 +1,51 @@
-function processed = part2(img, ksize, sigma)
+function subtract = part2(img, ratio, limC, ifmax, print)
+[w, h] = size(img);
+I = img;
+I=I-mean(I(:)); % Should I take zero-mean?
+shiftedF = fftshift(fft2(I));
+shiftedM=abs(shiftedF);
 
-    f = figure;
-    [imgM, imgP] = part1bstep3(img);
+minM = min(shiftedM(:))
+maxM = max(shiftedM(:))
 
-    % new_moonM = moonM;
-    minM = min(imgM(:))
-    maxM = max(imgM(:))
-    avgM = mean(imgM(:))
+thresh= maxM * ratio + minM * (1-ratio)
 
-    normZ = maxM - minM;
+param = 9; %min
+if ifmax
+    param = 9;
+end
 
-    filter = fspecial('gaussian', [ksize, ksize], sigma);
+max3x3 = ordfilt2(shiftedM, 9, ones(3, 3));
 
-    shiftM = (imgM - minM)/normZ;
+where = (shiftedM == max3x3) & (shiftedM > thresh);
 
-    alpha = shiftM;
+[r, c] = find(where);
+% whos r
+for i=1:length(r)
+    if (w-r(i))^2+(h-c(i))^2 > limC^2
+        if r(i) > limC & c(i) > limC
+            shiftedF(r(i)-limC:r(i)+limC,c(i)-limC:c(i)+limC)=0;  % zero the frequency components
+        end
+    end
+end
 
-    alpha = medfilt2(alpha);
+subtract=real(ifft2(fftshift(shiftedF)));
 
-    alphaS = size(alpha);
-    alpha = padarray(alpha,[1, 1],'replicate');
-    alpha = imfilter(alpha, filter, 'conv');
-    alpha = alpha(2:alphaS(1)+1, 2:alphaS(2)+1);
-
-    alpha = medfilt2(alpha);
-    normA = max(alpha(:)) - min(alpha(:));
-    alpha = alpha/normA;
-
-
-    new_imgM = alpha * normZ + minM;
-
-    new_img = ifft2(exp(new_imgM) .* exp(j * imgP));
-    processed = real(new_img);
+subtract = medfilt2(subtract);
 
 
+if print
     f = figure;
     a = subplot(2, 2, 1);
-    imshow(fftshift(alpha),[]);
-    title('alpha');
-    a = subplot(2, 2, 2);
-
-    imshow(fftshift(new_imgM),[]);;
-    title('new magnitude');
-
-
-    f = figure;
-    a = subplot(2, 2, 3);
-    imshow(img);
-    title('original');
-    a = subplot(2, 2, 4);
-    imshow(processed);
-    title('ifft');
-
-    f = figure;
-    imshow(processed);
-    title('result');
+    imshow(log(shiftedM + 1), []),colormap(gray),title('original magunitude');
     
+    a = subplot(2, 2, 2);
+    imshow(log(max3x3 + 1), []),colormap(gray), title('max');
+    
+    a = subplot(2, 2, 3);
+    imshow(1-where, []),colormap(gray),title('where to change');
+
+    a = subplot(2, 2, 4);
+    imshow(log(abs(shiftedF) + 1), []),colormap(gray),title('new magunitude');
+end
 end

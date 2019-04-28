@@ -1,11 +1,12 @@
 function [magnitude, phase] = part1bstep3(I)
     imgF = fft2(I);
     
-    magnitude = log(abs(imgF));
+    magnitude = abs(imgF);
+    log_magnitude = log(1 + magnitude);
     
     f = figure;
     a = subplot(1, 2, 1);
-    imshow(fftshift(magnitude),[]);;
+    imshow(fftshift(log_magnitude),[]);
     title("magnitude of DFT");
     colormap('gray'); drawnow;
     
