@@ -18,14 +18,16 @@ param = 9;
 
 max3x3 = ordfilt2(shiftedM, 9, ones(nxn, nxn));
 
-where = (shiftedM == max3x3) & (shiftedM > threshL)  & (shiftedM < threshU);;
+noncenter = protect_center(size(img), 15);
+
+where = (shiftedM == max3x3) & (shiftedM > threshL)  & (shiftedM < threshU) & noncenter;
 
 [r, c] = find(where);
 % whos r
 for i=1:length(r)
     if (w-r(i))^2+(h-c(i))^2 > limC^2
         if r(i) > limC & c(i) > limC
-            shiftedF(r(i)-limC:r(i)+limC,c(i)-limC:c(i)+limC)=0;
+            shiftedF(r(i)-limC:r(i)+limC,c(i)-limC:c(i)+limC)= mean(shiftedF(:));
         end
     end
 end
@@ -44,7 +46,7 @@ if print
     imshow(log(max3x3 + 1), []),colormap(gray), title('max');
     
     a = subplot(2, 2, 3);
-    imshow(where>0, []),colormap(gray),title('where to change');
+    imshow(noncenter),colormap(gray),title('where not to change');
 
     a = subplot(2, 2, 4);
     imshow(log(abs(shiftedF) + 1), []),colormap(gray),title('new magunitude');

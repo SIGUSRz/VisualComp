@@ -25,7 +25,7 @@ where = (shiftedM == max3x3) & ((shiftedM > threshL)  | (shiftedM < threshU));
 for i=1:length(r)
     if (w-r(i))^2+(h-c(i))^2 > limC^2
         if r(i) > limC & c(i) > limC
-            shiftedF(r(i)-limC:r(i)+limC,c(i)-limC:c(i)+limC)=0;
+            shiftedF(r(i)-limC:r(i)+limC,c(i)-limC:c(i)+limC)=mean(shiftedF(:));
         end
     end
 end
