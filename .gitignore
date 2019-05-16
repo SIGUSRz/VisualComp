@@ -6,6 +6,7 @@
 .idea/
 */func/
 */*.pdf
+*/*.doc
 
 # C extensions
 *.so
