@@ -7,6 +7,7 @@
 */func/
 */*.pdf
 */*.doc
+*/*.jpg
 
 # C extensions
 *.so
