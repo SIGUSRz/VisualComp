@@ -1,5 +1,5 @@
-function display_matches(I1, I2, matches, f1, f2)
-    
+function display_matches(I1, I2, matches, f1, f2, maxline)
+
     indices1 = matches(1,:);
     f1match = f1(:,indices1);
     indices2 = matches(2,:);
