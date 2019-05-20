@@ -27,7 +27,7 @@ for i = 1:N
   % visible points with 3D coord
   pts3 = getCorresp3D(path, i);
 
-  filename = strcat(path, "calibs/img", num2str(i), ".mat");
+  filename = strcat(path, 'calibs/img', num2str(i), '.mat');
   %load 2D coordinates x and y
   load(filename);
 
@@ -49,7 +49,7 @@ Ts = {};
 for i = 1:N
   pts3 = getCorresp3D(path, i);
 
-  filename = strcat(path, "calibs/img", num2str(i), ".mat");
+  filename = strcat(path, 'calibs/img', num2str(i), '.mat');
   %load 2D coordinates x and y
   load(filename);
   pts2 = [x'; y']';
@@ -62,3 +62,11 @@ end
 
 filename = strcat(path, 'calibs/KRT.mat');
 save(filename, 'Ks', 'Rs', 'Ts');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% calibration with 2D and 3D coordinates
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+plotCam(Ts, Rs);

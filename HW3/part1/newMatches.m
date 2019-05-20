@@ -15,10 +15,9 @@ function [Matches, Scores] = newMatches(Ds, N, path)
 
     % get the mean of min and max if the score is less, remove matches
     % h = histcounts(score, 10);
-    % cutoff = 1:sum(h(8:10));
+    % cutoff = 1:sum(h(2:10));
     % match = match(:, cutoff);
     % score = score(cutoff);
-
     Matches{end+1} = match;
     Scores{end+1} = score;
   end

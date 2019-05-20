@@ -38,6 +38,9 @@ for i = 1:N-1
   E2s{end+1} = e2;
 end
 
+filename = strcat(path, 'savedFund.mat');
+save(filename, 'Funds');
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % get rid of wrong matches
@@ -58,6 +61,9 @@ for i = 1:N-1
   trueMs{end+1} = trueM;
 end
 
+filename = strcat(path, 'savedTrueM.mat');
+save(filename, 'trueMs');
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % plot actual matches
@@ -74,7 +80,7 @@ for i = 1:N-1
 
   fig = figure(1);
   display_matches(Ii, Ij, match, Fs{i}, Fs{j});
-  savefile = strcat("part3/results/trueMatches", num2str(i) ,".png");
+  savefile = strcat('part3/results/trueMatches', num2str(i) ,'.png');
   saveas(fig,savefile);
 end
 
@@ -90,5 +96,10 @@ for i = 1:N-1
   Ii = singlePic(originals, i);
   Ij = singlePic(originals, j);
 
-  getEpipolarline(Ii, Ij, Funds{i}, E1s{i}, E2s{i}, Matches{i}, Fs{i}, Fs{j});
+  match = trueMs{i};
+
+  fig = figure(2);
+  getEpipolarline(Ii, Ij, Funds{i}, E1s{i}, E2s{i}, match(:, 6:8), Fs{i}, Fs{j});
+  savefile = strcat('part3/results/epipolar', num2str(i),num2str(j) ,'.png');
+  saveas(fig,savefile);
 end

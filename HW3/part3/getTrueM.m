@@ -7,7 +7,7 @@ function trueMs = getTrueM(F, possibleMs, f1, f2)
   indices2 = possibleMs(2,:);
   f2match = f2(1:2, indices2);
 
-  thres = 0.05;
+  thres = 0.08;
   L = size(f1match, 2);
 
   % homogeneous 3xL

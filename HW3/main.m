@@ -57,3 +57,6 @@ part2
 
 addpath('part3')
 part3
+
+addpath('part4')
+part4
