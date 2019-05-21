@@ -29,11 +29,12 @@ function X = triangulate(xL,xR,camL,camR)
   qR(3,:) = 1;
 
   R = inv(RL)*RR;
-  t = inv(RL)*(tR – tL);
+  t = inv(RL)*(tR - tL);
 
+  npts = size(qL, 2);
 
-  XL = zeros(3,npts)
-  XR = zeros(3,npts)
+  XL = zeros(3,npts);
+  XR = zeros(3,npts);
   for i = 1:npts
     A = [qL(:,i) -R*qR(:,i)];
     Z = A\t;

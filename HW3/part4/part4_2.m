@@ -1,12 +1,12 @@
 addpath('util');
-path = 'subset1/';
+path = 'subset2/';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % reconstruct 3D
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-filename = strcat(path, 'subset1imgs.mat');
+filename = strcat(path, 'subset2imgs.mat');
 %load original picture originals
 load(filename, 'originals');
 
@@ -33,6 +33,8 @@ countpoints = 0;
 
 for i = 1:N-1
   j = i + 1;
+
+  if i ~= 4
   [xL, xR] = getMatchedF(Funds{i}, trueMs{i}, Fs{i}, Fs{j});
   camL = {Ks{i}, Rs{i}, Ts{i}};
   camR = {Ks{j}, Rs{j}, Ts{j}};
@@ -48,6 +50,7 @@ for i = 1:N-1
   s = scatter3(X(1, :),X(2, :),X(3, :), 50, "fill");
   s.MarkerEdgeColor = 'white';
   s.MarkerFaceColor = 'blue';
+  end
 end
 
 
